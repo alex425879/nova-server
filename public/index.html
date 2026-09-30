@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>NOVA Restaurant</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Tahoma,sans-serif;
+}
+
+body{
+    background:#0b0b0d;
+    color:white;
+}
+
+header{
+    background:#121216;
+    border-bottom:1px solid #292932;
+    padding:18px 5%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+.logo{
+    color:#c9a45c;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.header-user{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+}
+
+.btn{
+    background:#c9a45c;
+    color:#111;
+    padding:12px 18px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.dark-btn{
+    background:#292932;
+    color:white;
+    padding:10px 15px;
+    border-radius:9px;
+}
+
+.container{
+    width:92%;
+    max-width:1200px;
+    margin:30px auto;
+}
+
+.hero{
+    text-align:center;
+    padding:60px 20px;
+}
+
+.hero h1{
+    font-size:50px;
+    color:#c9a45c;
+    margin-bottom:15px;
+}
+
+.hero p{
+    color:#aaa;
+    font-size:18px;
+}
+
+.section-title{
+    font-size:28px;
+    margin:35px 0 20px;
+}
+
+.categories{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    margin-bottom:25px;
+}
+
+.category{
+    background:#18181d;
+    border:1px solid #292932;
+    color:white;
+    padding:10px 18px;
+    border-radius:20px;
+    white-space:nowrap;
+    cursor:pointer;
+}
+
+.category.active{
+    background:#c9a45c;
+    color:#111;
+}
+
+.menu-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(230px,1fr));
+    gap:18px;
+}
+
+.menu-card{
+    background:#151519;
+    border:1px solid #292932;
+    border-radius:16px;
+    overflow:hidden;
+}
+
+.menu-image{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    background:#202027;
+}
+
+.menu-content{
+    padding:18px;
+}
+
+.menu-content h3{
+    margin-bottom:8px;
+}
+
+.menu-content p{
+    color:#999;
+    line-height:1.7;
+    min-height:45px;
+}
+
+.price{
+    color:#c9a45c;
+    font-size:20px;
+    font-weight:bold;
+    margin-top:12px;
+}
+
+.card{
+    background:#151519;
+    border:1px solid #292932;
+    border-radius:16px;
+    padding:22px;
+    margin-top:30px;
+}
+
+.card h2{
+    margin-bottom:20px;
+}
+
+input,
+select{
+    width:100%;
+    background:#0d0d10;
+    color:white;
+    border:1px solid #33333c;
+    border-radius:9px;
+    padding:13px;
+    margin-top:7px;
+    margin-bottom:15px;
+    outline:none;
+}
+
+label{
+    color:#aaa;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+}
+
+.available-tables{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(150px,1fr));
+    gap:12px;
+    margin:15px 0;
+}
+
+.table-option{
+    background:#101014;
+    border:1px solid #33333c;
+    padding:18px;
+    border-radius:12px;
+    text-align:center;
+    cursor:pointer;
+}
+
+.table-option:hover{
+    border-color:#c9a45c;
+}
+
+.table-option.selected{
+    background:#c9a45c;
+    color:#111;
+}
+
+.message{
+    margin-top:15px;
+    padding:12px;
+    border-radius:9px;
+    display:none;
+}
+
+.success{
+    display:block;
+    background:#173d25;
+    color:#7ee29b;
+}
+
+.error{
+    display:block;
+    background:#4a1c1c;
+    color:#ff8d8d;
+}
+
+.reservation{
+    background:#101014;
+    border:1px solid #292932;
+    padding:16px;
+    border-radius:12px;
+    margin-bottom:12px;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:20px;
+    background:#292932;
+    color:#c9a45c;
+    margin-top:8px;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    padding:20px;
+}
+
+.modal-box{
+    width:100%;
+    max-width:420px;
+    background:#151519;
+    border:1px solid #292932;
+    border-radius:18px;
+    padding:25px;
+}
+
+.modal-box h2{
+    margin-bottom:20px;
+}
+
+.close{
+    float:left;
+    background:#292932;
+    color:white;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+}
+
+.auth-switch{
+    text-align:center;
+    margin-top:15px;
+    color:#c9a45c;
+    cursor:pointer;
+}
+
+.empty{
+    color:#888;
+    padding:15px 0;
+}
+
+@media(max-width:600px){
+
+    .hero h1{
+        font-size:38px;
+    }
+
+    header{
+        padding:15px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        NOVA
+    </div>
+
+    <div
+        class="header-user"
+        id="headerUser"
+    >
+
+        <button
+            class="dark-btn"
+            onclick="openLogin()"
+        >
+            تسجيل الدخول
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <section class="hero">
+
+        <h1>
+            NOVA
+        </h1>
+
+        <p>
+            مطعم وكافيه — احجز ترابيزتك بسهولة
+        </p>
+
+    </section>
+
+
+    <!-- MENU -->
+
+    <section>
+
+        <h2 class="section-title">
+            🍽️ المنيو
+        </h2>
+
+        <div
+            class="categories"
+            id="categories"
+        ></div>
+
+        <div
+            class="menu-grid"
+            id="menu"
+        >
+            جاري تحميل المنيو...
+        </div>
+
+    </section>
+
+
+    <!-- BOOKING -->
+
+    <section class="card">
+
+        <h2>
+            🪑 احجز ترابيزتك
+        </h2>
+
+        <div class="grid">
+
+            <div>
+
+                <label>
+                    التاريخ
+                </label>
+
+                <input
+                    id="bookingDate"
+                    type="date"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    الوقت
+                </label>
+
+                <input
+                    id="bookingTime"
+                    type="time"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    عدد الأشخاص
+                </label>
+
+                <input
+                    id="guests"
+                    type="number"
+                    min="1"
+                    value="2"
+                >
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="btn"
+            onclick="findTables()"
+        >
+            🔎 البحث عن الترابيزات
+        </button>
+
+
+        <div
+            id="tablesMessage"
+            class="message"
+        ></div>
+
+
+        <div
+            id="availableTables"
+            class="available-tables"
+        ></div>
+
+
+        <button
+            class="btn"
+            onclick="makeReservation()"
+        >
+            ✅ تأكيد الحجز
+        </button>
+
+
+        <div
+            id="bookingMessage"
+            class="message"
+        ></div>
+
+    </section>
+
+
+    <!-- RESERVATIONS -->
+
+    <section class="card">
+
+        <h2>
+            📋 حجوزاتي
+        </h2>
+
+        <div
+            id="myReservations"
+        >
+            سجّل الدخول لرؤية حجوزاتك.
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- LOGIN MODAL -->
+
+<div
+    class="modal"
+    id="loginModal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeLogin()"
+        >
+            ×
+        </button>
+
+        <h2>
+            تسجيل الدخول
+        </h2>
+
+        <label>
+            البريد الإلكتروني
+        </label>
+
+        <input
+            id="loginEmail"
+            type="email"
+            placeholder="email@example.com"
+        >
+
+        <label>
+            كلمة المرور
+        </label>
+
+        <input
+            id="loginPassword"
+            type="password"
+        >
+
+        <button
+            class="btn"
+            style="width:100%"
+            onclick="login()"
+        >
+            دخول
+        </button>
+
+        <div
+            id="loginMessage"
+            class="message"
+        ></div>
+
+        <div
+            class="auth-switch"
+            onclick="showRegister()"
+        >
+            إنشاء حساب جديد
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- REGISTER MODAL -->
+
+<div
+    class="modal"
+    id="registerModal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeRegister()"
+        >
+            ×
+        </button>
+
+        <h2>
+            إنشاء حساب
+        </h2>
+
+        <label>
+            الاسم
+        </label>
+
+        <input
+            id="registerName"
+            type="text"
+            placeholder="اسمك"
+        >
+
+        <label>
+            البريد الإلكتروني
+        </label>
+
+        <input
+            id="registerEmail"
+            type="email"
+            placeholder="email@example.com"
+        >
+
+        <label>
+            كلمة المرور
+        </label>
+
+        <input
+            id="registerPassword"
+            type="password"
+            placeholder="كلمة المرور"
+        >
+
+        <button
+            class="btn"
+            style="width:100%"
+            onclick="register()"
+        >
+            إنشاء الحساب
+        </button>
+
+        <div
+            id="registerMessage"
+            class="message"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+let currentUser =
+    JSON.parse(
+        localStorage.getItem("novaUser") || "null"
+    );
+
+
+let selectedTable = null;
+
+let allItems = [];
+
+
+// =================================
+// MESSAGE
+// =================================
+
+function showMessage(id,text,type){
+
+    const box =
+        document.getElementById(id);
+
+    box.innerText = text;
+
+    box.className =
+        "message " + type;
+
+}
+
+
+// =================================
+// AUTH UI
+// =================================
+
+function openLogin(){
+
+    document.getElementById(
+        "loginModal"
+    ).style.display = "flex";
+
+}
+
+
+function closeLogin(){
+
+    document.getElementById(
+        "loginModal"
+    ).style.display = "none";
+
+}
+
+
+function showRegister(){
+
+    closeLogin();
+
+    document.getElementById(
+        "registerModal"
+    ).style.display = "flex";
+
+}
+
+
+function closeRegister(){
+
+    document.getElementById(
+        "registerModal"
+    ).style.display = "none";
+
+}
+
+
+// =================================
+// HEADER
+// =================================
+
+function updateHeader(){
+
+    const box =
+        document.getElementById(
+            "headerUser"
+        );
+
+
+    if(currentUser){
+
+        box.innerHTML = `
+
+            <span style="color:#aaa">
+                أهلاً ${currentUser.name}
+            </span>
+
+            <button
+                class="dark-btn"
+                onclick="logout()"
+            >
+                تسجيل الخروج
+            </button>
+
+        `;
+
+    }else{
+
+        box.innerHTML = `
+
+            <button
+                class="dark-btn"
+                onclick="openLogin()"
+            >
+                تسجيل الدخول
+            </button>
+
+        `;
+
+    }
+
+}
+
+
+function logout(){
+
+    localStorage.removeItem(
+        "novaUser"
+    );
+
+    currentUser = null;
+
+    updateHeader();
+
+    loadReservations();
+
+}
+
+
+// =================================
+// REGISTER
+// =================================
+
+async function register(){
+
+    const name =
+        document.getElementById(
+            "registerName"
+        ).value.trim();
+
+
+    const email =
+        document.getElementById(
+            "registerEmail"
+        ).value.trim();
+
+
+    const password =
+        document.getElementById(
+            "registerPassword"
+        ).value;
+
+
+    if(!name || !email || !password){
+
+        showMessage(
+            "registerMessage",
+            "اكتب جميع البيانات",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/register",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+                        name,
+                        email,
+                        password
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            showMessage(
+                "registerMessage",
+                data.message ||
+                    "تعذر إنشاء الحساب",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        currentUser =
+            data.user;
+
+
+        localStorage.setItem(
+            "novaUser",
+            JSON.stringify(currentUser)
+        );
+
+
+        closeRegister();
+
+        updateHeader();
+
+        loadReservations();
+
+
+        alert(
+            "تم إنشاء الحساب بنجاح"
+        );
+
+
+    }catch(error){
+
+        showMessage(
+            "registerMessage",
+            "تعذر الاتصال بالسيرفر",
+            "error"
+        );
+
+        console.error(error);
+
+    }
+
+}
+
+
+// =================================
+// LOGIN
+// =================================
+
+async function login(){
+
+    const email =
+        document.getElementById(
+            "loginEmail"
+        ).value.trim();
+
+
+    const password =
+        document.getElementById(
+            "loginPassword"
+        ).value;
+
+
+    if(!email || !password){
+
+        showMessage(
+            "loginMessage",
+            "اكتب البريد وكلمة المرور",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/login",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+                        email,
+                        password
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            showMessage(
+                "loginMessage",
+                data.message ||
+                    "بيانات الدخول غير صحيحة",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        currentUser =
+            data.user;
+
+
+        localStorage.setItem(
+            "novaUser",
+            JSON.stringify(currentUser)
+        );
+
+
+        closeLogin();
+
+        updateHeader();
+
+        loadReservations();
+
+
+        alert(
+            "تم تسجيل الدخول"
+        );
+
+
+    }catch(error){
+
+        showMessage(
+            "loginMessage",
+            "تعذر الاتصال بالسيرفر",
+            "error"
+        );
+
+        console.error(error);
+
+    }
+
+}
+
+
+// =================================
+// LOAD MENU
+// =================================
+
+async function loadMenu(){
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/menu"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        allItems =
+            data.items || [];
+
+
+        const categories =
+            document.getElementById(
+                "categories"
+            );
+
+
+        categories.innerHTML = `
+
+            <button
+                class="category active"
+                onclick="filterMenu('all',this)"
+            >
+                الكل
+            </button>
+
+        `;
+
+
+        (data.categories || [])
+            .forEach(function(category){
+
+                categories.innerHTML += `
+
+                    <button
+                        class="category"
+                        onclick="filterMenu(${category.id},this)"
+                    >
+                        ${escapeHtml(category.name)}
+                    </button>
+
+                `;
+
+            });
+
+
+        renderMenu(allItems);
+
+
+    }catch(error){
+
+        document.getElementById(
+            "menu"
+        ).innerHTML =
+            "<p class='empty'>تعذر تحميل المنيو</p>";
+
+        console.error(error);
+
+    }
+
+}
+
+
+function renderMenu(items){
+
+    const box =
+        document.getElementById(
+            "menu"
+        );
+
+
+    if(!items.length){
+
+        box.innerHTML =
+            "<p class='empty'>لا توجد منتجات حاليًا</p>";
+
+        return;
+
+    }
+
+
+    box.innerHTML =
+        items.map(function(item){
+
+            const image =
+                item.image ||
+                "https://via.placeholder.com/600x400?text=NOVA";
+
+
+            return `
+
+                <div class="menu-card">
+
+                    <img
+                        class="menu-image"
+                        src="${escapeHtml(image)}"
+                        onerror="this.src='https://via.placeholder.com/600x400?text=NOVA'"
+                    >
+
+                    <div class="menu-content">
+
+                        <h3>
+                            ${escapeHtml(item.name)}
+                        </h3>
+
+                        <p>
+                            ${escapeHtml(
+                                item.description || ""
+                            )}
+                        </p>
+
+                        <div class="price">
+                            ${item.price} جنيه
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+function filterMenu(categoryId,button){
+
+    document
+        .querySelectorAll(".category")
+        .forEach(function(btn){
+
+            btn.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    if(categoryId === "all"){
+
+        renderMenu(allItems);
+
+        return;
+
+    }
+
+
+    renderMenu(
+        allItems.filter(function(item){
+
+            return Number(
+                item.category_id
+            ) === Number(categoryId);
+
+        })
+    );
+
+}
+
+
+// =================================
+// FIND TABLES
+// =================================
+
+async function findTables(){
+
+    if(!currentUser){
+
+        openLogin();
+
+        showMessage(
+            "tablesMessage",
+            "سجّل الدخول أولًا حتى تتمكن من الحجز",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const date =
+        document.getElementById(
+            "bookingDate"
+        ).value;
+
+
+    const time =
+        document.getElementById(
+            "bookingTime"
+        ).value;
+
+
+    const guests =
+        document.getElementById(
+            "guests"
+        ).value;
+
+
+    if(!date || !time || !guests){
+
+        showMessage(
+            "tablesMessage",
+            "اختار التاريخ والوقت وعدد الأشخاص",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    selectedTable = null;
+
+
+    const box =
+        document.getElementById(
+            "availableTables"
+        );
+
+
+    box.innerHTML =
+        "جاري البحث...";
+
+
+    try{
+
+        const response =
+            await fetch(
+                `/api/tables/available?date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&guests=${encodeURIComponent(guests)}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            box.innerHTML = "";
+
+            showMessage(
+                "tablesMessage",
+                data.message ||
+                    "تعذر البحث",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if(
+            !data.tables ||
+            !data.tables.length
+        ){
+
+            box.innerHTML =
+                "<p class='empty'>لا توجد ترابيزات متاحة في هذا الموعد.</p>";
+
+            showMessage(
+                "tablesMessage",
+                "لم نجد ترابيزة متاحة",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        showMessage(
+            "tablesMessage",
+            `تم العثور على ${data.tables.length} ترابيزة متاحة`,
+            "success"
+        );
+
+
+        box.innerHTML =
+            data.tables.map(function(table){
+
+                return `
+
+                    <div
+                        class="table-option"
+                        onclick="selectTable(${table.id},this)"
+                    >
+
+                        🪑
+
+                        <br><br>
+
+                        ترابيزة
+                        ${table.table_number}
+
+                        <br>
+
+                        👥 $
+{table.seats} أفراد
+
+                    </div>
+
+                `;
+
+            }).join("");
+
+
+    }catch(error){
+
+        box.innerHTML = "";
+
+        showMessage(
+            "tablesMessage",
+            "حدث خطأ في الاتصال بالسيرفر",
+            "error"
+        );
+
+        console.error(error);
+
+    }
+
+}
+
+
+// =================================
+// SELECT TABLE
+// =================================
+
+function selectTable(id,element){
+
+    document
+        .querySelectorAll(".table-option")
+        .forEach(function(table){
+
+            table.classList.remove(
+                "selected"
+            );
+
+        });
+
+
+    element.classList.add(
+        "selected"
+    );
+
+
+    selectedTable = id;
+
+}
+
+
+// =================================
+// CREATE RESERVATION
+// =================================
+
+async function makeReservation(){
+
+    if(!currentUser){
+
+        openLogin();
+
+        showMessage(
+            "bookingMessage",
+            "سجّل الدخول أولًا",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const date =
+        document.getElementById(
+            "bookingDate"
+        ).value;
+
+
+    const time =
+        document.getElementById(
+            "bookingTime"
+        ).value;
+
+
+    const guests =
+        document.getElementById(
+            "guests"
+        ).value;
+
+
+    if(!date || !time || !guests){
+
+        showMessage(
+            "bookingMessage",
+            "أكمل بيانات الحجز",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!selectedTable){
+
+        showMessage(
+            "bookingMessage",
+            "اختار ترابيزة أولًا",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/reservations",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        user_id:
+                            currentUser.id,
+
+                        table_id:
+                            selectedTable,
+
+                        date:
+                            date,
+
+                        time:
+                            time,
+
+                        guests:
+                            Number(guests)
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            showMessage(
+                "bookingMessage",
+                data.message ||
+                    "تعذر إنشاء الحجز",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        showMessage(
+            "bookingMessage",
+            data.message ||
+                "تم إرسال الحجز بنجاح",
+            "success"
+        );
+
+
+        selectedTable = null;
+
+
+        document.getElementById(
+            "availableTables"
+        ).innerHTML = "";
+
+
+        loadReservations();
+
+
+    }catch(error){
+
+        showMessage(
+            "bookingMessage",
+            "حدث خطأ أثناء إرسال الحجز",
+            "error"
+        );
+
+        console.error(error);
+
+    }
+
+}
+
+
+// =================================
+// LOAD RESERVATIONS
+// =================================
+
+async function loadReservations(){
+
+    const box =
+        document.getElementById(
+            "myReservations"
+        );
+
+
+    if(!currentUser){
+
+        box.innerHTML =
+            "سجّل الدخول لرؤية حجوزاتك.";
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                `/api/reservations/${currentUser.id}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !data.reservations ||
+            !data.reservations.length
+        ){
+
+            box.innerHTML =
+                "<p class='empty'>لا توجد حجوزات حتى الآن.</p>";
+
+            return;
+
+        }
+
+
+        box.innerHTML =
+            data.reservations
+                .map(function(r){
+
+                    return `
+
+                        <div class="reservation">
+
+                            🪑 الترابيزة:
+                            ${r.table_number}
+
+                            <br>
+
+                            📅 التاريخ:
+                            ${r.date}
+
+                            <br>
+
+                            ⏰ الوقت:
+                            ${r.time}
+
+                            <br>
+
+                            👥 الأشخاص:
+                            ${r.guests}
+
+                            <br>
+
+                            الحالة:
+
+                            <span class="status">
+                                ${getStatus(r.status)}
+                            </span>
+
+                        </div>
+
+                    `;
+
+                })
+                .join("");
+
+
+    }catch(error){
+
+        box.innerHTML =
+            "<p class='empty'>تعذر تحميل الحجوزات.</p>";
+
+        console.error(error);
+
+    }
+
+}
+
+
+// =================================
+// STATUS
+// =================================
+
+function getStatus(status){
+
+    if(status === "pending")
+        return "في انتظار التأكيد";
+
+    if(status === "confirmed")
+        return "تم التأكيد";
+
+    if(status === "cancelled")
+        return "ملغي";
+
+    if(status === "completed")
+        return "مكتمل";
+
+    return status;
+
+}
+
+
+// =================================
+// ESCAPE HTML
+// =================================
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+// =================================
+// DATE MIN
+// =================================
+
+const today =
+    new Date()
+        .toISOString()
+        .split("T")[0];
+
+
+document.getElementById(
+    "bookingDate"
+).min = today;
+
+
+// =================================
+// START
+// =================================
+
+updateHeader();
+
+loadMenu();
+
+loadReservations();
+
+</script>
+
+</body>
+
+</html>
